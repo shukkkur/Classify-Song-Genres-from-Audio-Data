@@ -1,4 +1,4 @@
-<h3 align='center'>Classify Song Genres from Audio Data<br>Rock or rap?</h3>
+<h3 align='center'>Classify Song Genres from Audio Data<br>Rock or rap?</h3><hr>
 
 ![Forks](https://img.shields.io/github/forks/shukkkur/Classify-Song-Genres-from-Audio-Data.svg)
 ![Stars](https://img.shields.io/github/stars/shukkkur/Classify-Song-Genres-from-Audio-Data.svg)
