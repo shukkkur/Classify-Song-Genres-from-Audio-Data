@@ -131,8 +131,8 @@ class_rep_log = classification_report(test_labels, pred_labels_logit)
 
 print("Decision Tree: \n", class_rep_tree)
 print("Logistic Regression: \n", class_rep_log)
+```
 
->>>
 | Decision Tree: |        |          |         |      |  
 |----------------|--------|----------|---------|------|
 | precision      | recall | f1-score | support |      |
@@ -140,33 +140,30 @@ print("Logistic Regression: \n", class_rep_log)
 | Rock           | 0.92   | 0.92     | 0.92    | 972  |
 | avg / total    | 0.87   | 0.87     | 0.87    | 1201 |
 
->>>
 | Logistic Regression: |        |          |         |      |
 |----------------------|--------|----------|---------|------|
 | precision            | recall | f1-score | support |      |
 | Hip-Hop              | 0.75   | 0.57     | 0.65    | 229  |
 | Rock                 | 0.90   | 0.95     | 0.93    | 972  |
 | avg / total          | 0.87   | 0.88     | 0.87    | 1201 | 
+
+
+<h3>8. Using cross-validation to evaluate our models</h3>
+<p>To get a good sense of how well our models are actually performing, we can apply what's called <b>cross-validation</b> (CV).
+
+```python
+from sklearn.model_selection import KFold, cross_val_score
+
+kf = KFold(n_splits=10)
+
+tree = DecisionTreeClassifier(random_state=10)
+logreg = LogisticRegression(random_state=10)
+
+tree_score = cross_val_score(tree,pca_projection, labels, cv=kf)
+logit_score = cross_val_score(logreg,pca_projection, labels, cv=kf)
+
+print("Decision Tree:", tree_score)
+>>> Decision Tree: [0.6978022  0.6978022  0.69230769 0.78571429 0.71978022 0.67032967 0.75824176 0.76923077 0.75274725 0.6978022 ]
+print("Logistic Regression:", logit_score)
+>>> Logistic Regression: [0.79120879 0.76373626 0.78571429 0.78571429 0.78571429 0.78021978 0.75274725 0.76923077 0.81868132 0.71978022]
 ```
-
-
-<h3>8. Balance our data for greater performance</h3>
-
-
-
-
-
-
-
-
-
-
-<h3>9. Does balancing our dataset improve model bias?</h3>
-
-
-
-
-
-
-
-<h3>10. Using cross-validation to evaluate our models</h3>
