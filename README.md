@@ -44,23 +44,39 @@ corr_metrics = echo_tracks.corr()
 corr_metrics.style.background_gradient()
 ```
 <p align='center'>
-  <img width=500 height=300 src='https://i.ytimg.com/vi/oPgWYj2smCw/maxresdefault.jpg'>
+  <img src='datasets/corr.jpg'>
 </p>
 
-
-
 <h3>3. Normalizing the feature data</h3>
+<p>Since we didn't find any particular strong correlations between our features, we can instead use a common approach to reduce the number of features called <b>principal component analysis (PCA)</b><br>To avoid bias, I first normalize the data using <code>sklearn</code> built-in <code>StandardScaler</code> method</p>
 
+```python
+from sklearn.preprocessing import StandardScaler
 
+features = echo_tracks.drop(['track_id', 'genre_top'], axis=1)
+labels = echo_tracks.genre_top
 
-
-
-
-
-
-
+scaler = StandardScaler()
+scaled_train_features = scaler.fit_transform(features)
+```
 
 <h3>4. Principal Component Analysis on our scaled data</h3>
+<p>Now PCA is ready to determine by how much we can reduce the dimensionality of our data. We can use <b>scree-plots</b> and <b>cumulative explained ratio plots</b> to find the number of components to use in further analyses.</p>
+  
+```python
+from sklearn.decomposition import PCA
+
+pca = PCA()
+pca.fit(scaled_train_features)
+
+exp_variance = pca.explained_variance_ratio_
+
+fig, ax = plt.subplots()
+ax.bar(range(pca.n_components_), exp_variance)
+ax.set_xlabel('Principal Component #')
+```
+
+<img src='datasets/PCAhist.jpg'>
 
 
 
