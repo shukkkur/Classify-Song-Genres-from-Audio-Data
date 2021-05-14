@@ -167,3 +167,5 @@ print("Decision Tree:", tree_score)
 print("Logistic Regression:", logit_score)
 >>> Logistic Regression: [0.79120879 0.76373626 0.78571429 0.78571429 0.78571429 0.78021978 0.75274725 0.76923077 0.81868132 0.71978022]
 ```
+
+<h4> Success! </h4>
