@@ -101,26 +101,53 @@ pca_projection = pca.transform(scaled_train_features)
 
 
 <h3>6. Train a decision tree to classify genre</h3>
+<p>Now we can use the lower dimensional PCA projection of the data to classify songs into genres. we will be using a simple algorithm known as a <b>decision tree</b>.</p>
 
+```python
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 
+train_features, test_features, train_labels, test_labels = train_test_split(pca_projection, labels, random_state=10)
 
+tree = DecisionTreeClassifier(random_state=10)
+tree.fit(train_features, train_labels)
 
-
-
-
-
-
-
+pred_labels_tree = tree.predict(test_features)
+```
 
 <h3>7. Compare our decision tree to a logistic regression</h3>
+<p>There's always the possibility of other models that will perform even better! Sometimes simplest is best, and so we will start by applying <b>logistic regression</b>.</p>
 
+```python
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
 
+logreg = LogisticRegression(random_state=10)
+logreg.fit(train_features, train_labels)
+pred_labels_logit = logreg.predict(test_features)
 
+class_rep_tree = classification_report(test_labels, pred_labels_tree)
+class_rep_log = classification_report(test_labels, pred_labels_logit)
 
+print("Decision Tree: \n", class_rep_tree)
+print("Logistic Regression: \n", class_rep_log)
 
+>>>
+| Decision Tree: |        |          |         |      |  
+|----------------|--------|----------|---------|------|
+| precision      | recall | f1-score | support |      |
+| Hip-Hop        | 0.66   | 0.66     | 0.66    | 229  |
+| Rock           | 0.92   | 0.92     | 0.92    | 972  |
+| avg / total    | 0.87   | 0.87     | 0.87    | 1201 |
 
-
-
+>>>
+| Logistic Regression: |        |          |         |      |
+|----------------------|--------|----------|---------|------|
+| precision            | recall | f1-score | support |      |
+| Hip-Hop              | 0.75   | 0.57     | 0.65    | 229  |
+| Rock                 | 0.90   | 0.95     | 0.93    | 972  |
+| avg / total          | 0.87   | 0.88     | 0.87    | 1201 | 
+```
 
 
 <h3>8. Balance our data for greater performance</h3>
