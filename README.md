@@ -5,20 +5,47 @@
 </p> -->
 
 <h3>1. Preparing our dataset</h3>
+<p>    Over the past few years, streaming services with huge catalogs have become the primary means through which most people listen to their favorite music. For this reason, streaming services have looked into means of categorizing music to allow for personalized recommendations.<br><br>Let's load the metadata about our tracks alongside the track metrics compiled by <b>The Echo Nest</b>.</p>
 
+```python
+import pandas as pd
 
+tracks = pd.read_csv('datasets/fma-rock-vs-hiphop.csv')
+echonest_metrics = pd.read_json('datasets/echonest-metrics.json', precise_float=True)
 
+# Merge the relevant columns of tracks and echonest_metrics
+echo_tracks = pd.merge(echonest_metrics, tracks[['track_id' , 'genre_top']], how='inner', on='track_id')
 
-
-
+# Inspect the resultant dataframe
+echo_tracks.info()
+```
+|   Int64Index: 4802 entries, 0 to 4801   |                       |
+|:---------------------------------------:|:---------------------:|
+|     Data columns (total 10 columns):    |                       |
+|               acousticness              | 4802 non-null float64 |
+|               danceability              | 4802 non-null float64 |
+|                  energy                 | 4802 non-null float64 |
+|             instrumentalness            | 4802 non-null float64 |
+|                 liveness                | 4802 non-null float64 |
+|               speechiness               | 4802 non-null float64 |
+|                  tempo                  | 4802 non-null float64 |
+|                 track_id                | 4802 non-null int64   |
+|                 valence                 | 4802 non-null float64 |
+|                genre_top                | 4802 non-null object  |
+| dtypes: float64(8), int64(1), object(1) |                       |
+|         memory usage: 412.7+ KB         |                       |
 
 
 <h3>2. Pairwise relationships between continuous variables</h3>
+<p>We want to avoid using variables that have strong correlations with each other -- hence avoiding feature redundancy<br>To get a sense of whether there are any strongly correlated features in our data, we will use built-in functions in the <code>pandas</code> package <code>.corr()</code>. </p>
 
-
-
-
-
+```python
+corr_metrics = echo_tracks.corr()
+corr_metrics.style.background_gradient()
+```
+<p align='center'>
+  <img width=500 height=300 src='https://i.ytimg.com/vi/oPgWYj2smCw/maxresdefault.jpg'>
+</p>
 
 
 
